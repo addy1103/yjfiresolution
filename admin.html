@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YJ Dashboard — Management Portal</title>
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="./src/style.css">
+    <style>
+        :root {
+            --app-sidebar-width: 280px;
+            --app-primary: #dc2626;
+            --app-bg: #050505;
+            --app-card: rgba(255, 255, 255, 0.03);
+            --app-border: rgba(255, 255, 255, 0.07);
+        }
+
+        body {
+            background-color: var(--app-bg);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: var(--app-sidebar-width);
+            background: #080808;
+            border-right: 1px solid var(--app-border);
+            display: flex;
+            flex-direction: column;
+            padding: 32px 0;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            padding: 0 32px 48px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .sidebar-logo span {
+            color: var(--app-primary);
+        }
+
+        .nav-items {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 0 16px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #64748b;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-item i {
+            font-size: 1.1rem;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: #fff;
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        .nav-item.active i {
+            color: var(--app-primary);
+        }
+
+        /* --- Main Content --- */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .top-nav {
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .top-nav h2 {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+        }
+
+        /* --- Dashboard Grid --- */
+        .dashboard-content {
+            padding: 40px;
+            max-width: 1200px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .stat-card {
+            background: var(--app-card);
+            border: 1px solid var(--app-border);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--app-primary);
+            opacity: 0.5;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        /* --- Inquiries Section --- */
+        .inquiry-section {
+            background: var(--app-card);
+            border: 1px solid var(--app-border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .inquiry-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--app-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .inquiry-header h3 {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .lead-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .lead-table th {
+            text-align: left;
+            padding: 16px 32px;
+            background: rgba(255, 255, 255, 0.02);
+            font-size: 0.75rem;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .lead-table td {
+            padding: 20px 32px;
+            border-bottom: 1px solid var(--app-border);
+            vertical-align: middle;
+        }
+
+        .lead-table tr:hover {
+            background: rgba(255, 255, 255, 0.015);
+        }
+
+        .lead-name {
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .lead-subtext {
+            color: #64748b;
+            font-size: 0.82rem;
+        }
+
+        .status-pill {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-pill.new {
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--app-primary);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        .status-pill.read {
+            background: rgba(64, 64, 64, 0.1);
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--app-border);
+            color: #64748b;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-icon:hover {
+            background: var(--app-primary);
+            color: #fff;
+            border-color: var(--app-primary);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            YJ <span>DASH</span>
+        </div>
+        <nav class="nav-items">
+            <a href="#" class="nav-item active"><i class="fas fa-grid-2"></i> Inquiries</a>
+            <a href="#" class="nav-item"><i class="fas fa-chart-line"></i> Analytics</a>
+            <a href="#" class="nav-item"><i class="fas fa-users"></i> Contacts</a>
+            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Settings</a>
+        </nav>
+    </aside>
+
+    <main class="main-container">
+        <header class="top-nav">
+            <h2>Management Overview</h2>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <span style="color: #64748b; font-size: 0.88rem;" id="serverStatus">
+                    System Active <i class="fas fa-circle"
+                        style="color: #22c55e; font-size: 0.5rem; margin-left: 4px;"></i>
+                </span>
+            </div>
+        </header>
+
+        <section class="dashboard-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Project Queries</span>
+                    <div class="stat-value" id="count-total">0</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Unread Leads</span>
+                    <div class="stat-value" id="count-new">0</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Conversion Rate</span>
+                    <div class="stat-value">--</div>
+                </div>
+            </div>
+
+            <div class="inquiry-section">
+                <div class="inquiry-header">
+                    <h3>Recent Project Leads</h3>
+                    <button class="btn-icon" onclick="loadMessages()" title="Refresh Data"><i
+                            class="fas fa-sync-alt"></i></button>
+                </div>
+                <table class="lead-table">
+                    <thead>
+                        <tr>
+                            <th>Inquiry Details</th>
+                            <th>Contact Method</th>
+                            <th>Timestamp</th>
+                            <th>Status</th>
+                            <th>Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inboxBody">
+                        <!-- Filled by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="./src/admin.js"></script>
+</body>
+
+</html>
