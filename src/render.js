@@ -2,7 +2,7 @@ export const renderNavbar = () => `
   <nav class="navbar" id="navbar">
     <div class="nav-container">
       <a href="#home" class="nav-logo">
-        <img src="/logo-yj.png" alt="YJ Firesolutions Logo" class="nav-logo-img">
+        <img src="/logo-yj.svg" alt="YJ Firesolutions Logo" class="nav-logo-img">
       </a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#home" class="nav-link active">Home</a></li>
@@ -419,7 +419,7 @@ export const renderFooter = () => `
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="#home" class="nav-logo">
-            <img src="/logo-yj.png" alt="YJ Firesolutions Logo" class="nav-logo-img" style="height: 48px; filter: grayscale(1) brightness(1.5);">
+            <img src="/logo-yj.svg" alt="YJ Firesolutions Logo" class="nav-logo-img" style="height: 48px; filter: grayscale(1) brightness(1.5);">
           </a>
           <p>The tri-state's trusted partner for code-compliant firestop installation and professional inspection services since 2011.</p>
           <div class="social-links">

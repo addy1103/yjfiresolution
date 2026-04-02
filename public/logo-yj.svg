@@ -1,0 +1,14 @@
+<svg width="240" height="60" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Industrial Shield Icon -->
+  <path d="M12 4L32 10V28C32 40 22 52 12 56C2 52 -8 40 -8 28V10L12 4Z" fill="none" stroke="#DC2626" stroke-width="3" transform="translate(10,0)"/>
+  
+  <!-- Stylized Flame Inside Shield -->
+  <path d="M22 24C22 18 18 14 18 14C18 14 14 18 14 24C14 30 18 34 18 34C18 34 22 30 22 24Z" fill="#DC2626" transform="translate(4,4)"/>
+  <path d="M22 32C22 28 20 25 20 25C20 25 18 28 18 32C18 36 20 38 20 38C20 38 22 36 22 32Z" fill="#FFFFFF" transform="translate(4,4)"/>
+
+  <!-- YJ Text -->
+  <text x="60" y="32" font-family="Arial, sans-serif" font-weight="900" font-size="28" fill="#FFFFFF" style="letter-spacing: -1px;">YJ</text>
+  
+  <!-- FIRESOLUTIONS Tagline -->
+  <text x="60" y="48" font-family="Arial, sans-serif" font-weight="600" font-size="10" fill="#64748B" style="letter-spacing: 3px;">FIRESOLUTIONS</text>
+</svg>
