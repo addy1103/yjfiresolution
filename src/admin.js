@@ -9,6 +9,9 @@ async function loadMessages() {
     const res = await fetch('/api/admin/messages');
     const messages = await res.json();
 
+    // Cache for modal use
+    localStorage.setItem('last_messages', JSON.stringify(messages));
+
     // Update Stats
     countTotal.textContent = messages.length;
     const newLeads = messages.filter(m => m.status === 'New').length;
@@ -22,7 +25,7 @@ async function loadMessages() {
     body.innerHTML = messages.map(msg => {
       const date = new Date(msg.created_at);
       const formattedDate = date.toLocaleDateString('en-US', { day: '2-digit', month: 'short' });
-      const urgencyClass = msg.timeline?.includes('Emergency') ? 'urgency-high' : 'urgency-low';
+      const urgencyClass = (msg.timeline && msg.timeline.includes('Emergency')) ? 'urgency-high' : 'urgency-low';
       
       const isNew = msg.status === 'New';
       const statusClass = isNew ? 'new' : 'read';
@@ -37,7 +40,7 @@ async function loadMessages() {
             <div class="service-badge">${msg.service_type || 'General'}</div>
           </td>
           <td>
-            <div style="font-size: 0.9rem; font-weight: 500;">${msg.location || 'Tri-State'}</div>
+            <div style="font-size: 0.9rem; font-weight: 500;">${msg.location || 'Tri-State Area'}</div>
             <div style="font-size: 0.75rem; color: #475569;">${formattedDate}</div>
           </td>
           <td>
@@ -58,19 +61,13 @@ async function loadMessages() {
                 </button>
               </div>
             </div>
-            <!-- Hidden details content -->
-            <div id="details-${msg.id}" style="display:none;">
-              <strong>Project Description:</strong><br>
-              ${msg.message || 'No description provided.'}
-              <br><br>
-              <strong>Contact Phone:</strong> ${msg.phone || 'N/A'}
-            </div>
           </td>
         </tr>
       `;
     }).join('');
 
   } catch (err) {
+    console.error('Fetch error:', err);
     body.innerHTML = '<tr><td colspan="5" style="color: #dc2626; padding: 40px; text-align: center;">Unable to connect to Private Backend.</td></tr>';
   }
 }
@@ -100,8 +97,23 @@ window.deleteMessage = async (id) => {
 };
 
 window.viewMessage = (id) => {
-  const content = document.getElementById(`details-${id}`).innerHTML;
-  alert('--- PROJECT INQUIRY DETAILS ---\n\n' + content.replace(/<br>/g, '\n').replace(/<strong>|<\/strong>/g, ''));
+  const messages = JSON.parse(localStorage.getItem('last_messages') || '[]');
+  const msg = messages.find(m => m.id == id);
+  
+  if (!msg) return;
+
+  document.getElementById('modalName').textContent = msg.name;
+  document.getElementById('modalService').textContent = msg.service_type || 'General';
+  document.getElementById('modalLocation').textContent = msg.location || 'Tri-State Area';
+  document.getElementById('modalTimeline').textContent = msg.timeline || 'Planning Phase';
+  document.getElementById('modalContact').textContent = `${msg.email} | ${msg.phone || 'No Phone'}`;
+  document.getElementById('modalMessage').textContent = msg.message || 'No additional details provided.';
+  
+  document.getElementById('inquiryModal').classList.add('active');
+};
+
+window.closeModal = () => {
+  document.getElementById('inquiryModal').classList.remove('active');
 };
 
 // Start Dashboard
