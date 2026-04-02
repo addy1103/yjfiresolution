@@ -397,9 +397,9 @@ export const renderFooter = () => `
           </a>
           <p>The tri-state's trusted partner for code-compliant firestop installation and professional inspection services since 2011.</p>
           <div class="social-links">
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Follow us on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
           </div>
         </div>
         

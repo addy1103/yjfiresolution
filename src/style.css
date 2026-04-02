@@ -1280,6 +1280,34 @@ ul {
   font-size: 0.95rem;
 }
 
+.social-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: var(--gray-400);
+  font-size: 1.1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social-links a:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(179, 48, 37, 0.3);
+}
+
 .footer-title {
   font-family: var(--font-display);
   font-size: 1.5rem;
