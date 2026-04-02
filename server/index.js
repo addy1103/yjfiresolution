@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import Database from 'better-sqlite3';
+import session from 'express-session';
 import path from 'path';
 
 dotenv.config();
@@ -11,7 +12,29 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const __dirname = path.resolve();
 
-// --- 1. Database Initialization ---
+// --- 1. Middleware & Session ---
+app.use(cors());
+app.use(express.json());
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'yjfire-dev-secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { 
+        secure: false, // Set to true in HTTPS production
+        maxAge: 1000 * 60 * 60 * 24 // 24 hours
+    }
+}));
+
+// Auth Guard Middleware
+const requireAuth = (req, res, next) => {
+    if (req.session.isAdmin) {
+        next();
+    } else {
+        res.status(401).json({ error: 'Authentication required' });
+    }
+};
+
+// --- 2. Database Initialization ---
 const db = new Database('messages.db');
 db.exec(`
   CREATE TABLE IF NOT EXISTS messages (
@@ -71,10 +94,37 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
-// --- 4. Private API: Admin Management ---
+// --- 4. Admin Authentication ---
+
+// Login API
+app.post('/api/admin/login', (req, res) => {
+    const { username, password } = req.body;
+    const adminUser = process.env.ADMIN_USER || 'admin';
+    const adminPass = process.env.ADMIN_PASS || 'yjfire2026';
+
+    if (username === adminUser && password === adminPass) {
+        req.session.isAdmin = true;
+        res.json({ success: true, message: 'Logged in successfully' });
+    } else {
+        res.status(401).json({ error: 'Invalid username or password' });
+    }
+});
+
+// Logout API
+app.get('/api/admin/logout', (req, res) => {
+    req.session.destroy();
+    res.json({ success: true });
+});
+
+// Check Session
+app.get('/api/admin/check-session', (req, res) => {
+    res.json({ authenticated: !!req.session.isAdmin });
+});
+
+// --- 5. Private API: Admin Management (PROTECTED) ---
 
 // GET: All Inquiries
-app.get('/api/admin/messages', (req, res) => {
+app.get('/api/admin/messages', requireAuth, (req, res) => {
     try {
         const messages = db.prepare('SELECT * FROM messages ORDER BY created_at DESC').all();
         res.json(messages);
@@ -84,7 +134,7 @@ app.get('/api/admin/messages', (req, res) => {
 });
 
 // PATCH: Update Status
-app.patch('/api/admin/messages/:id', (req, res) => {
+app.patch('/api/admin/messages/:id', requireAuth, (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
     try {
@@ -96,7 +146,7 @@ app.patch('/api/admin/messages/:id', (req, res) => {
 });
 
 // DELETE: Remove Lead
-app.delete('/api/admin/messages/:id', (req, res) => {
+app.delete('/api/admin/messages/:id', requireAuth, (req, res) => {
     const { id } = req.params;
     try {
         db.prepare('DELETE FROM messages WHERE id = ?').run(id);
@@ -106,14 +156,23 @@ app.delete('/api/admin/messages/:id', (req, res) => {
     }
 });
 
-// --- 5. Routing: Frontend & Admin Portal ---
+// --- 6. Routing (PROTECTED /admin) ---
 
-// Serve Admin Dashboard at /admin
-app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'admin.html'));
+// Login Page (PUBLIC)
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'login.html'));
 });
 
-// Fallback: Serve the main index.html for any other route (Vite SPA compatibility)
+// Admin Dashboard (PROTECTED)
+app.get('/admin', (req, res, next) => {
+    if (req.session.isAdmin) {
+        res.sendFile(path.join(__dirname, 'dist', 'admin.html'));
+    } else {
+        res.redirect('/login');
+    }
+});
+
+// Fallback: If no other route matches, serve main site
 app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });

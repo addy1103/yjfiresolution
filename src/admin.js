@@ -116,6 +116,11 @@ window.closeModal = () => {
   document.getElementById('inquiryModal').classList.remove('active');
 };
 
+window.logout = async () => {
+  await fetch('/api/admin/logout');
+  window.location.href = '/login';
+};
+
 // Start Dashboard
 loadMessages();
 // Auto refresh every 60 seconds
