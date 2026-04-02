@@ -368,9 +368,37 @@ export const renderContact = () => `
                 <input type="email" name="email" placeholder="john@company.com" required>
               </div>
             </div>
-            <div class="form-group">
-              <label>Phone Number <span class="optional">(optional)</span></label>
-              <input type="tel" name="phone" placeholder="(555) 000-0000">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Phone Number <span class="optional">(optional)</span></label>
+                <input type="tel" name="phone" placeholder="(555) 000-0000">
+              </div>
+              <div class="form-group">
+                <label>Project Location</label>
+                <input type="text" name="location" placeholder="City, State" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Service Category</label>
+                <select name="service_type" class="custom-select">
+                  <option value="Penetration Sealing">Penetration Sealing</option>
+                  <option value="HVAC/Mechanical">HVAC / Mechanical</option>
+                  <option value="Electrical/Data">Electrical / Data</option>
+                  <option value="Perimeter Firestop">Perimeter Firestop</option>
+                  <option value="Inspection Only">Inspection Only</option>
+                  <option value="Other">Other (Note in details)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Desired Timeline</label>
+                <select name="timeline" class="custom-select">
+                  <option value="Emergency (Immediate)">Emergency (Immediate)</option>
+                  <option value="Within 1 Week">Within 1 Week</option>
+                  <option value="2-4 Weeks">2-4 Weeks</option>
+                  <option value="Planning Phase">Planning Phase</option>
+                </select>
+              </div>
             </div>
             <div class="form-group">
               <label>Project Details</label>

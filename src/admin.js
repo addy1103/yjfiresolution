@@ -22,8 +22,8 @@ async function loadMessages() {
     body.innerHTML = messages.map(msg => {
       const date = new Date(msg.created_at);
       const formattedDate = date.toLocaleDateString('en-US', { day: '2-digit', month: 'short' });
-      const formattedTime = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-
+      const urgencyClass = msg.timeline?.includes('Emergency') ? 'urgency-high' : 'urgency-low';
+      
       const isNew = msg.status === 'New';
       const statusClass = isNew ? 'new' : 'read';
 
@@ -31,32 +31,39 @@ async function loadMessages() {
         <tr id="row-${msg.id}">
           <td>
             <div class="lead-name">${msg.name}</div>
-            <div class="lead-subtext" style="max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-              ${msg.message || 'No project description provided'}
+            <div class="lead-subtext">${msg.email}</div>
+          </td>
+          <td>
+            <div class="service-badge">${msg.service_type || 'General'}</div>
+          </td>
+          <td>
+            <div style="font-size: 0.9rem; font-weight: 500;">${msg.location || 'Tri-State'}</div>
+            <div style="font-size: 0.75rem; color: #475569;">${formattedDate}</div>
+          </td>
+          <td>
+            <span class="timeline-badge ${urgencyClass}">${msg.timeline || 'Planning'}</span>
+          </td>
+          <td>
+            <div class="action-row">
+              <span class="status-pill ${statusClass}">${msg.status}</span>
+              <div class="action-btns">
+                <button class="btn-icon" onclick="viewMessage('${msg.id}')" title="View Details">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn-icon" onclick="updateStatus(${msg.id}, 'Read')" title="Mark Read">
+                  <i class="fas fa-check"></i>
+                </button>
+                <button class="btn-icon" onclick="deleteMessage(${msg.id})" title="Delete">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
             </div>
-          </td>
-          <td>
-            <div style="font-weight: 500; font-size: 0.9rem;">${msg.email}</div>
-            <div class="lead-subtext">${msg.phone || 'No phone'}</div>
-          </td>
-          <td>
-            <div style="font-size: 0.88rem;">${formattedDate}</div>
-            <div class="lead-subtext">${formattedTime}</div>
-          </td>
-          <td>
-            <span class="status-pill ${statusClass}">${msg.status}</span>
-          </td>
-          <td>
-            <div class="action-btns">
-              <button class="btn-icon" onclick="updateStatus(${msg.id}, 'Read')" title="Mark as Read">
-                <i class="fas fa-check"></i>
-              </button>
-              <button class="btn-icon" onclick="updateStatus(${msg.id}, 'Archived')" title="Archive">
-                <i class="fas fa-archive"></i>
-              </button>
-              <button class="btn-icon" onclick="deleteMessage(${msg.id})" title="Delete">
-                <i class="fas fa-trash"></i>
-              </button>
+            <!-- Hidden details content -->
+            <div id="details-${msg.id}" style="display:none;">
+              <strong>Project Description:</strong><br>
+              ${msg.message || 'No description provided.'}
+              <br><br>
+              <strong>Contact Phone:</strong> ${msg.phone || 'N/A'}
             </div>
           </td>
         </tr>
@@ -90,6 +97,11 @@ window.deleteMessage = async (id) => {
   } catch (err) {
     alert('Delete failed');
   }
+};
+
+window.viewMessage = (id) => {
+  const content = document.getElementById(`details-${id}`).innerHTML;
+  alert('--- PROJECT INQUIRY DETAILS ---\n\n' + content.replace(/<br>/g, '\n').replace(/<strong>|<\/strong>/g, ''));
 };
 
 // Start Dashboard

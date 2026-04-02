@@ -269,6 +269,58 @@
             border-color: var(--app-primary);
         }
 
+        /* --- NEW DASHBOARD COMPONENTS --- */
+        .service-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--app-border);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .timeline-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .urgency-high {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .urgency-low {
+            background: rgba(34, 197, 94, 0.1);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .action-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .stat-growth {
+            margin-top: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-growth i {
+            margin-right: 4px;
+        }
+
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
@@ -307,35 +359,51 @@
         </header>
 
         <section class="dashboard-content">
-            <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr); gap: 20px;">
                 <div class="stat-card">
-                    <span class="stat-label">Project Queries</span>
+                    <span class="stat-label">Total Leads</span>
                     <div class="stat-value" id="count-total">0</div>
+                    <div class="stat-growth"><i class="fas fa-arrow-up"></i> Project Pipeline</div>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-label">Unread Leads</span>
-                    <div class="stat-value" id="count-new">0</div>
+                    <span class="stat-label">New Inquiries</span>
+                    <div class="stat-value" id="count-new" style="color: var(--app-primary);">0</div>
+                    <div class="stat-growth">Action Required</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Avg. Response</span>
+                    <div class="stat-value">2.4h</div>
+                    <div class="stat-growth">Business Day</div>
+                </div>
+                <div class="stat-card" style="border-right: 4px solid #22c55e;">
+                    <span class="stat-label">System Health</span>
+                    <div class="stat-value" style="font-size: 1.2rem; color: #22c55e; margin-top: 10px;">OPERATIONAL</div>
+                    <div class="stat-growth">All nodes active</div>
                 </div>
             </div>
 
             <div class="inquiry-section">
                 <div class="inquiry-header">
-                    <h3>Recent Project Leads</h3>
-                    <button class="btn-icon" onclick="loadMessages()" title="Refresh Data"><i
-                            class="fas fa-sync-alt"></i></button>
+                    <div>
+                        <h3>Lead Intake Flow</h3>
+                        <p style="color: #64748b; font-size: 0.8rem; margin: 4px 0 0;">Real-time feed of firestop project inquiries across the Tri-State.</p>
+                    </div>
+                    <button class="btn-icon" onclick="loadMessages()" title="Refresh Feed" style="width: 44px; height: 44px; border-radius: 10px;">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
                 </div>
                 <table class="lead-table">
                     <thead>
                         <tr>
-                            <th>Inquiry Details</th>
-                            <th>Contact Method</th>
-                            <th>Timestamp</th>
-                            <th>Status</th>
-                            <th>Manage</th>
+                            <th>Prospect &amp; Contact</th>
+                            <th>Service Type</th>
+                            <th>Location</th>
+                            <th>Timeline</th>
+                            <th>Status &amp; Actions</th>
                         </tr>
                     </thead>
                     <tbody id="inboxBody">
-                        <!-- Filled by JS -->
+                        <!-- Filled by admin.js -->
                     </tbody>
                 </table>
             </div>

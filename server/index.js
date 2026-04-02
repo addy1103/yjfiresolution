@@ -20,6 +20,9 @@ db.exec(`
     email TEXT NOT NULL,
     phone TEXT,
     message TEXT,
+    location TEXT,
+    service_type TEXT,
+    timeline TEXT,
     status TEXT DEFAULT 'New',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )
@@ -34,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // --- 3. Public API: Contact Form Submission ---
 app.post('/api/contact', async (req, res) => {
-    const { name, email, phone, message } = req.body;
+    const { name, email, phone, message, location, service_type, timeline } = req.body;
 
     if (!name || !email) {
         return res.status(400).json({ error: 'Name and email are required.' });
@@ -42,8 +45,8 @@ app.post('/api/contact', async (req, res) => {
 
     try {
         // Save to DB
-        const stmt = db.prepare('INSERT INTO messages (name, email, phone, message) VALUES (?, ?, ?, ?)');
-        stmt.run(name, email, phone, message);
+        const stmt = db.prepare('INSERT INTO messages (name, email, phone, message, location, service_type, timeline) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        stmt.run(name, email, phone, message, location || null, service_type || 'Unspecified', timeline || 'Planning');
 
         // Email Notification
         if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
