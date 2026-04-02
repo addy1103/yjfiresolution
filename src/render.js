@@ -22,43 +22,101 @@ export const renderNavbar = () => `
 
 export const renderHero = () => `
   <section class="hero" id="home">
-    <div class="hero-bg-image"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-red-accent"></div>
-    <div class="hero-inner">
-      <div class="hero-content">
+    <div class="hero-noise"></div>
+    <div class="hero-glow"></div>
+
+    <div class="hero-split">
+      <!-- LEFT: Content -->
+      <div class="hero-left">
         <div class="hero-eyebrow">
-          <span class="eyebrow-line"></span>
+          <span class="eyebrow-dot"></span>
           <span>Firestop Installation &amp; Inspection</span>
         </div>
+
         <h1 class="hero-title">
-          We seal penetrations.<br>
-          <span class="title-accent">You stay code-compliant.</span>
+          We seal<br>
+          <span class="title-gradient">penetrations.</span><br>
+          <span class="title-sub">You stay code-compliant.</span>
         </h1>
+
         <p class="hero-subtitle">
-          YJ Firesolutions handles firestop for general contractors across the tri-state area.
-          Pipe sleeves, cable trays, curtain walls — if it goes through a rated assembly, we seal it right.
+          YJ Firesolutions handles firestop for general contractors across the
+          tri-state area. Pipe sleeves, cable trays, curtain walls &mdash; if it
+          goes through a rated assembly, we seal it right.
         </p>
+
+        <div class="hero-certs">
+          <span class="cert-badge"><i class="fas fa-shield-halved"></i> Hilti Certified</span>
+          <span class="cert-badge"><i class="fas fa-certificate"></i> STI Trained</span>
+          <span class="cert-badge"><i class="fas fa-award"></i> 3M Approved</span>
+        </div>
+
         <div class="hero-buttons">
-          <a href="#contact" class="btn btn-hero-primary">Get a Quote</a>
-          <a href="#services" class="btn btn-hero-outline">See What We Do</a>
+          <a href="#contact" class="btn btn-hero-primary">
+            <i class="fas fa-clipboard-list"></i> Get a Free Quote
+          </a>
+          <a href="#work" class="btn btn-hero-outline">
+            <i class="fas fa-images"></i> View Our Work
+          </a>
         </div>
       </div>
+
+      <!-- RIGHT: Image -->
+      <div class="hero-right">
+        <!-- Image frame — clean, no overflow clipping of chips -->
+        <div class="hero-image-frame">
+          <img src="/projects/hero-worker.jpg" alt="YJ Firesolutions technician applying firestop sealant" class="hero-photo">
+          <div class="hero-image-overlay"></div>
+        </div>
+
+        <!-- Floating stat chips — siblings of frame, NOT inside it -->
+        <div class="hero-chip hero-chip--tl">
+          <i class="fas fa-fire-flame-curved"></i>
+          <div>
+            <strong>500+</strong>
+            <span>Projects Done</span>
+          </div>
+        </div>
+        <div class="hero-chip hero-chip--br">
+          <i class="fas fa-circle-check"></i>
+          <div>
+            <strong>100%</strong>
+            <span>Inspection Pass Rate</span>
+          </div>
+        </div>
+
+        <!-- Experience badge — sibling of frame -->
+        <div class="hero-exp-badge">
+          <span class="exp-num">14</span>
+          <span class="exp-label">Years<br>Experience</span>
+        </div>
+
+        <!-- Decorative lines -->
+        <div class="hero-deco-line hero-deco-line--v"></div>
+        <div class="hero-deco-line hero-deco-line--h"></div>
+      </div>
     </div>
+
+    <!-- Bottom trust bar -->
     <div class="hero-bottom-bar">
       <div class="hero-stat">
         <strong>500+</strong>
-        <span>Projects</span>
+        <span>Projects Completed</span>
       </div>
       <div class="hero-stat-divider"></div>
       <div class="hero-stat">
         <strong>14 yrs</strong>
-        <span>Experience</span>
+        <span>In the Industry</span>
       </div>
       <div class="hero-stat-divider"></div>
       <div class="hero-stat">
         <strong>100%</strong>
         <span>Inspection Pass Rate</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <strong>Tri-State</strong>
+        <span>Coverage Area</span>
       </div>
     </div>
   </section>
@@ -75,22 +133,22 @@ export const renderServices = () => `
       <div class="services-grid">
         ${[
     {
-      img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop',
+      img: '/projects/installation-pipe-ceiling.jpg',
       title: 'Penetration Firestopping',
       desc: 'The bread and butter. We seal around pipes, conduits, cables, and ducts where they pass through fire-rated walls and floors.'
     },
     {
-      img: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&h=400&fit=crop',
+      img: '/projects/firestop-wall-sealing.jpg',
       title: 'Fire Barriers & Safing',
       desc: 'Perimeter fire containment at curtain walls, edge-of-slab conditions, and area separation walls.'
     },
     {
-      img: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&h=400&fit=crop',
+      img: '/projects/cable-tray-penetration.jpg',
       title: 'Electrical & Mechanical Seals',
       desc: 'Cable tray penetrations, bus duct openings, HVAC sleeves — the stuff that gets missed until inspection day.'
     },
     {
-      img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=400&fit=crop',
+      img: '/projects/inspection-tablet.jpg',
       title: 'Inspections & Documentation',
       desc: 'We photo-document every penetration and provide inspection-ready reports for the AHJ.'
     }
@@ -115,7 +173,7 @@ export const renderAbout = () => `
     <div class="container">
       <div class="about-grid">
         <div class="about-image-col">
-          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=900&fit=crop"
+          <img src="/projects/cable-bundle-sealing.jpg"
             alt="YJ Firesolutions crew on job site" loading="lazy" class="about-photo">
           <div class="experience-tag">
             <strong>Est. 2011</strong>
@@ -158,11 +216,18 @@ export const renderProcess = () => `
         <h2>How we work</h2>
       </div>
       <div class="process-steps">
-        ${['Scope Review', 'Mobilization', 'Installation', 'Closeout'].map((step, i) => `
+        ${[
+          { title: 'Scope Review', desc: 'We review architectural drawings and specs to verify UL-classified systems for every penetration type.' },
+          { title: 'Mobilization', desc: 'Our certified crews arrive with the right materials, ready to tackle complex firestop challenges.' },
+          { title: 'Installation', desc: 'Precision application of sealants, sprays, and devices to ensure strict compliance with fire codes.' },
+          { title: 'Closeout', desc: 'Comprehensive photo documentation and reporting provided for smooth AHJ inspections.' }
+        ].map((step, i) => `
           <div class="step">
-            <span class="step-num">0${i + 1}</span>
-            <h3>${step}</h3>
-            <p>Every step of our process is designed to ensure maximum code compliance and project efficiency.</p>
+            <div class="step-header">
+              <span class="step-num">0${i + 1}</span>
+            </div>
+            <h3>${step.title}</h3>
+            <p>${step.desc}</p>
           </div>
         `).join('')}
       </div>
@@ -180,32 +245,75 @@ export const renderWork = () => `
       </div>
       <div class="work-grid">
         <div class="work-card work-large">
-          <img src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?w=800&h=600&fit=crop" alt="Metro Tower Construction">
+          <img src="/projects/cable-tray-penetration.jpg" alt="Cable Tray Firestopping Installation">
           <div class="work-overlay">
             <div class="work-info">
               <span class="work-tag">Commercial</span>
-              <h3>Metro Tower, 40 Floors</h3>
-              <p>Vertical penetration sealing and smoke compartmentation for 400,000 sq.ft. of office space.</p>
+              <h3>High-Density Cable Tray Sealing</h3>
+              <p>Full firestopping of overhead cable tray runs at rated wall penetrations in a large commercial facility.</p>
             </div>
           </div>
         </div>
         <div class="work-card">
-          <img src="https://images.unsplash.com/photo-1503387762-592dea58ef21?w=600&h=500&fit=crop" alt="Hospital Safety Project">
-          <div class="work-overlay">
-            <div class="work-info">
-              <span class="work-tag">Healthcare</span>
-              <h3>Regional Medical Center</h3>
-              <p>Critical smoke seal maintenance in operative surgical units.</p>
-            </div>
-          </div>
-        </div>
-        <div class="work-card">
-          <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7ec4?w=600&h=500&fit=crop" alt="Data Center Firewall">
+          <img src="/projects/installation-pipe-ceiling.jpg" alt="Pipe Ceiling Firestop Installation">
           <div class="work-overlay">
             <div class="work-info">
               <span class="work-tag">Industrial</span>
-              <h3>Global Data Hub</h3>
-              <p>Installation of high-density cable transit systems.</p>
+              <h3>Overhead Pipe Penetration Seals</h3>
+              <p>Multi-pipe sleeve firestopping on ceiling-mounted mechanical runs.</p>
+            </div>
+          </div>
+        </div>
+        <div class="work-card">
+          <img src="/projects/cable-bundle-sealing.jpg" alt="Cable Bundle Firestop Sealing">
+          <div class="work-overlay">
+            <div class="work-info">
+              <span class="work-tag">Mixed-Use</span>
+              <h3>Cable Bundle Wall Penetrations</h3>
+              <p>Intumescent sealing of complex cable bundle arrays passing through rated compartment walls.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-gallery-strip">
+        <div class="gallery-card">
+          <img src="/projects/kingspan-pipe-wall.jpg" alt="Kingspan Pipe Wall Assembly">
+          <div class="work-overlay">
+            <div class="work-info">
+              <span class="work-tag">Penetration</span>
+              <h3>Insulated Pipe Wall Assembly</h3>
+              <p>Kingspan-insulated pipe passing through a rated block wall with firestop wrap and board seal.</p>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="/projects/duct-barrier-penetration.jpg" alt="Duct Barrier Penetration">
+          <div class="work-overlay">
+            <div class="work-info">
+              <span class="work-tag">HVAC</span>
+              <h3>HVAC Duct Barrier Penetration</h3>
+              <p>Fire barrier board installation around large HVAC ductwork passing through a rated compartment.</p>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="/projects/multi-pipe-floor-seal.jpg" alt="Multi Pipe Floor Seal">
+          <div class="work-overlay">
+            <div class="work-info">
+              <span class="work-tag">Healthcare</span>
+              <h3>Multi-Pipe Floor Penetrations</h3>
+              <p>High-density pipe sealing across a horizontal rated assembly — copper, conduit and insulated runs.</p>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="/projects/insulated-pipe-runs.jpg" alt="Insulated Pipe Runs">
+          <div class="work-overlay">
+            <div class="work-info">
+              <span class="work-tag">Mechanical</span>
+              <h3>Kooltherm Pipe Run Sealing</h3>
+              <p>Firestopping of Kooltherm-wrapped pipe arrays at rated wall junction in a commercial building.</p>
             </div>
           </div>
         </div>
